@@ -1,0 +1,72 @@
+database schema:
+    store_information
+        id           : int
+        name         : varchar(30)
+        description  : varchar(200)
+        start_time   : datetime
+        end_time     : datetime
+        open_days    : varchar(7)
+        phone_number : varchar(9)
+        image_id     : int
+
+    store_account
+        id           : int
+        email        : varchar(100)
+        password     : varchar(15)
+        front_name   : varchar(10)
+        last_name    : varchar(10)
+        phone_number : varchar(9)
+
+    student_account
+        id                : int
+        email             : varchar(100)
+        password          : varchar(15)
+        transaction_times : int
+        bad_trans_times   : int
+
+    sell_item
+        id          : int
+        store_id    : int
+        name        : varchar(20)
+        description : varchar(100)
+        price       : int
+        image_id    : int
+
+    transaction_record
+        id            : int
+        store_id      : int
+        student_id    : int
+        price         : int
+        date_time     : datetime
+        has_accepted  : int(0 or 1)
+        has_completed : int(0 or 1)
+        has_paid      : int(0 or 1)
+
+    transaction_item
+        transaction_id : int
+        item_id        : int
+        number         : int
+
+APIs:
+    /get_stores 
+    /get_items  
+    /login      (skip)
+    /register   (skip)
+    /send_transaction  
+    /send_receive_cash
+    /send_item_finished
+    /send_accept_item
+    /get_transaction_status
+    /get_transactions
+
+what server and client should communicate
+server send:
+    transaction approved
+    student_receive_item
+    item finished        (notification needed)
+    
+
+socketIO
+push notification
+
+
