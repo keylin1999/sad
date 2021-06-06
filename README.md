@@ -5,11 +5,17 @@ description 描述
 POST 就是送 JSON 檔給 server 然後方法設成 POST
 
 setup:
+(開啟後端)(linux)
 virtualenv venv
 source venv/bin/activate
 pip install -r requirement.txt
 python app.py
 
+(開啟前端)(windows)
+在fffend資料夾內用cmd
+npm install
+然後
+npm start
 
 <> 裡面的東西就是直接把值打在那個 slash 後面
 /get_store_image/<image_id> | method = GET
@@ -67,7 +73,7 @@ return
 }
 
 /get_transactions | method = GET
-usage: /get_transaction_status?store_id=1
+usage: /get_transactions?store_id=1 //
 description
 回傳跟某個商店相關的所有交易
 return list of

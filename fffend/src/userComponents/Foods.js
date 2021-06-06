@@ -41,7 +41,7 @@ export const Foods = ({ foods, orders, setOrders }) => {
             console.log('購物車不存在此品項')
         }
         else if(orders[index].qty === 1){
-            setOrders(orders.filter(order => order.name != name))
+            setOrders(orders.filter(order => order.name !== name))
         }
         else{
             let newOrders = [...orders]

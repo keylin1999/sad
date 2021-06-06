@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import { Stores } from "./components/Stores"
-import { Foods } from "./components/Foods"
-import { Container } from 'semantic-ui-react'
-import { Orders } from "./components/Orders"
+import { Container } from 'semantic-ui-react';
+import { HashRouter, Route, Switch, Link } from "react-router-dom";
 
-
+import UserPage from './UserPage'
+import StorePage from './StorePage'
+import HomePage from './HomePage'
 
 function App() {
   const [stores, setStores] = useState([])
+  const [curStore, setCurStore] = useState("")
   const [foods, setFoods] = useState([])
   const [orders,setOrders] = useState([])
+
+  // 老闆
+  const[transaction_id, setTransaction_id] = useState([])
+  const[transaction_status, setTransaction_status] = useState([])
 
   useEffect(() => {
     fetch('/get_stores').then(res => 
@@ -22,21 +27,14 @@ function App() {
 
 
 
-  async function getFoods(storeId) {
-    const res = await fetch('/get_items/'+storeId)
-    const foodData = await res.json()
-    // console.log(foodData)
-    setFoods(foodData)
-  }
-
   return (
-    <Container style={{ marginTop:40 }}>
-      <div className="App">
-        <Stores stores={stores} getFoods={getFoods} ></Stores>
-        <Foods foods={foods} orders={orders} setOrders={setOrders} ></Foods>
-        <Orders orders={orders}></Orders>
-      </div>
-    </Container>
+    <HashRouter>
+      <Switch>
+        <Route exact path="/" component={HomePage}/>
+        <Route exact path="/user" component={UserPage}/>
+        <Route exact path="/store" component={StorePage}/>
+      </Switch>
+    </HashRouter>
   );
 }
 
