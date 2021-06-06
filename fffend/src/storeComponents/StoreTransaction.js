@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {List, Header, Button} from 'semantic-ui-react';
 
 
-export const StoreTransaction = ({transactions, transaction_items}) => {
-
-    const [show, setShow] = useState([])
+export const StoreTransaction = ({transactions, setTransactions}) => {
 
     function getStatus(x){
         if(x.has_completed === 1){
@@ -50,16 +48,22 @@ export const StoreTransaction = ({transactions, transaction_items}) => {
     }
 
 
-    async function showTransInfo(id, index){
-        setShow((prev)=>{
-            return [...prev, id]
+    function showInfo(index){
+        setTransactions((prev)=>{
+            prev[index].show = true
+            return [...prev]
         })
-        console.log("show",show)
-        console.log("in",show.includes(id))
+    }
+
+    function closeInfo(index){
+        setTransactions((prev)=>{
+            prev[index].show = false
+            return [...prev]
+        })
     }
 
     const Results = ({id, index}) =>{
-        const trans_items = transaction_items[index]
+        const trans_items = transactions[index].item
         return(
             <div>
             {trans_items.map(item => {
@@ -72,6 +76,8 @@ export const StoreTransaction = ({transactions, transaction_items}) => {
                 <Button onClick={() => accept_item(id)}>接受訂單</Button>
                 <Button onClick={() => receive_cash(id)}>已付款</Button>
                 <Button onClick={() => item_finished(id)}>已完成</Button>
+                
+                <Button onClick={() => closeInfo(index)}>關閉</Button>
             </div>
         )}
     
@@ -88,9 +94,8 @@ export const StoreTransaction = ({transactions, transaction_items}) => {
                           金額: {x.price}
                           時間: {x.date_time}
                           狀態: {getStatus(x)}
-                          <Button onClick={() => showTransInfo(id, index)}>查看</Button>
-                          {show.includes(id) ? <Results id={id} index={index} /> : null }
-                          {/* <Results id={id} index={index} /> */}
+                          <Button onClick={() => showInfo(index)}>查看</Button>
+                          {x.show ? <Results id={id} index={index} /> : null }
                       </Header>  
                     </List.Item> 
                 )
