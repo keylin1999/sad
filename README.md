@@ -4,18 +4,35 @@ return list of 就是會回傳一個含有後面範例的 array
 description 描述
 POST 就是送 JSON 檔給 server 然後方法設成 POST
 
-setup:
+===================== setup =====================
+git clone https://github.com/keylin1999/sad.git
+
+(開啟資料庫)(linux)
+sudo apt update
+sudo apt upgrate
+sudo apt install mysql-server
+sudo service mysql start
+sudo mysql_secure_installation (一直按 enter 然後在設密碼的地方設成 root)
+sudo mysql -u root -p (登入 帳號跟密碼都root)
+(設定不使用sudo就能登入)
+https://stackoverflow.com/questions/37239970/connect-to-mysql-server-without-sudo
+
 (開啟後端)(linux)
 virtualenv venv
 source venv/bin/activate
 pip install -r requirement.txt
 python app.py
 
+(後端爆炸的話)(linux)
+ps -fA | grep python
+kill -9 {id}
+
 (開啟前端)(windows)
 在fffend資料夾內用cmd
 npm install
 然後
 npm start
+===================== setup =====================
 
 <> 裡面的東西就是直接把值打在那個 slash 後面
 /get_store_image/<image_id> | method = GET
