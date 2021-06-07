@@ -1,24 +1,24 @@
 import React from 'react';
-import {List, Header, Button} from 'semantic-ui-react';
+import { List, Header, Button, Table } from 'semantic-ui-react';
 
 
 
 export const Foods = ({ foods, orders, setOrders }) => {
-    
-    function addOrders(id, name){
-        if(orders.length === 0){
-            setOrders(function(prevOrders){
-                return[...prevOrders, { id:id, name:name, qty:1 }]
+
+    function addOrders(id, name, price) {
+        if (orders.length === 0) {
+            setOrders(function (prevOrders) {
+                return [...prevOrders, { id: id, name: name, qty: 1, price: price}]
             })
         }
-        else{
+        else {
             let index = orders.map(anOrder => anOrder.name).indexOf(name);
-            if(index === -1){
-                setOrders(function(prevOrders){
-                    return[...prevOrders, { id:id, name:name, qty:1 }]
+            if (index === -1) {
+                setOrders(function (prevOrders) {
+                    return [...prevOrders, { id: id, name: name, qty: 1, price: price }]
                 })
             }
-            else{
+            else {
                 let newOrders = [...orders]
                 let qty = newOrders[index].qty
                 newOrders[index].qty = qty + 1
@@ -35,15 +35,15 @@ export const Foods = ({ foods, orders, setOrders }) => {
         }
     }
 
-    function rmOrders(id, name){
+    function rmOrders(id, name) {
         let index = orders.map(anOrder => anOrder.name).indexOf(name);
-        if(index === -1){
+        if (index === -1) {
             console.log('購物車不存在此品項')
         }
-        else if(orders[index].qty === 1){
+        else if (orders[index].qty === 1) {
             setOrders(orders.filter(order => order.name !== name))
         }
-        else{
+        else {
             let newOrders = [...orders]
             let qty = newOrders[index].qty
             newOrders[index].qty = qty - 1
@@ -51,21 +51,34 @@ export const Foods = ({ foods, orders, setOrders }) => {
         }
     }
 
+    return (
+        <Table celled inverted selectable textAlign='center' unstackable>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell width={6}>食物</Table.HeaderCell>
+                    <Table.HeaderCell width={6}>價格</Table.HeaderCell>
+                    <Table.HeaderCell width={4}></Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
 
-    return(
-        <List>
-            {foods.map(food => {
-                return(
-                    <List.Item key={food.id}>
-                      <Header>
-                        {food.name} : {food.price} 元
-                        <Button onClick={() => addOrders(food.id, food.name)}>+</Button>
-                        <Button onClick={() => rmOrders(food.id, food.name)}>-</Button> 
-                      </Header>  
-                    </List.Item> 
-                )
-            })}
-        </List>
+            <Table.Body>
+                {
+                    foods.map(food => {
+                        return (
+                            <Table.Row>
+                                <Table.Cell>{food.name}</Table.Cell>
+                                <Table.Cell>{food.price} 元</Table.Cell>
+                                <Table.Cell>
+                                    <Button basic color='orange' onClick={() => addOrders(food.id, food.name, food.price)}>+</Button>
+                                    <Button basic color='orange' onClick={() => rmOrders(food.id, food.name)}>-</Button>
+                                </Table.Cell>
+                                
+                            </Table.Row>
+                        )
+                    })
+                }
+            </Table.Body>
+        </Table>
     )
 }
 

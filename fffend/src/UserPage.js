@@ -24,6 +24,10 @@ function UserPage() {
   const [transaction_ids, setTransaction_ids] = useState([])
   const [transaction_status, setTransaction_status] = useState([])
 
+  const [showStore, setShowStore] = useState(true)
+  const [showMenu, setShowMenu] = useState(true)
+  const [showTrans, setShowTrans] = useState(true)
+
 
 
   useEffect(() => {
@@ -98,6 +102,10 @@ function UserPage() {
     }
   }
 
+  function rmAllOrders(){
+    setOrders([])
+  }
+
   useEffect(async () => {
     const trans_id = transaction_ids[transaction_ids.length - 1]
 
@@ -130,26 +138,63 @@ function UserPage() {
     })
   }
 
-  const imgUrl = ['']
+  function showStoreInfo(){
+    if(showStore===true){
+      setShowStore(false)
+    }
+    else{
+      setShowStore(true)
+    }
+  }
+  function showMenuInfo(){
+    if(showMenu===true){
+      setShowMenu(false)
+    }
+    else{
+      setShowMenu(true)
+    }
+  }
+  function showTransInfo(){
+    if(showTrans===true){
+      setShowTrans(false)
+    }
+    else{
+      setShowTrans(true)
+    }
+  }
 
   return (
     <Container style={{ marginTop: 40 }}>
+      {/* <Button attached='top' onClick={()=>show()}>顯示店家</Button> */}
+      <Grid columns={2}>
+        <Button.Group>
+          <Button onClick={()=>showStoreInfo()}>顯示店家</Button>
+          <Button onClick={()=>showMenuInfo()}>顯示菜單</Button>
+          <Button onClick={()=>showTransInfo()}>顯示訂單</Button>
+          <Button><Link to="/">返回首頁</Link></Button>
+        </Button.Group>
+          
+      </Grid>
 
-      <div>
-        <Stores stores={stores} getFoods={getFoods} storeImg={storeImg} ></Stores>
 
-        <Foods foods={foods} orders={orders} setOrders={setOrders} ></Foods>
+      {showStore ? 
+      <Stores stores={stores} getFoods={getFoods} storeImg={storeImg} ></Stores> 
+      : null}
 
-        <Orders orders={orders}></Orders>
+      {showMenu ?
+      <Grid columns={2} stackable>
+        <Grid.Column width={8}>
+          <Foods foods={foods} orders={orders} setOrders={setOrders} ></Foods>
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <Orders orders={orders} sendOrders={sendOrders} rmAllOrders={rmAllOrders}></Orders>
+        </Grid.Column>
+      </Grid>
+      : null}
 
-        <Button onClick={() => sendOrders()}>送出</Button>
-        {/* <Button onClick={() => getTrans()}>取得訂單</Button> */}
-        <Link to="/">
-          <Button>返回首頁</Button>
-        </Link>
-
-        <Transaction transaction_status={transaction_status}></Transaction>
-      </div>
+      {showTrans ?
+      <Transaction transaction_status={transaction_status}></Transaction>
+      : null}
     </Container>
   );
 }

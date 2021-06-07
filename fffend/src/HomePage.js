@@ -28,7 +28,7 @@ function HomePage() {
     const img_url = `url("https://aniseblog.tw/wp-content/uploads/2019/08/1566147631-3955b0cbeeb7b17e165186d46f3b3cce.jpg")`
 
     return (
-        <Container style={{ padding: 100, backgroundImage: img_url }}>
+        <Container style={{ marginTop: '10vh', padding: '20vh', backgroundImage: img_url }}>
             <Segment placeholder>
                 <Grid columns={2} centered={true} stackable>
                     <Grid.Row>

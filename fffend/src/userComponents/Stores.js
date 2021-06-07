@@ -13,17 +13,19 @@ export const Stores = ({ stores, getFoods, storeImg }) => {
     ]
 
     return (
-        <Grid columns={3} centered={true}>
+        <Grid columns={3} centered={true} stackable>
             {stores.map(aStore => {
                 return (
                     <Grid.Column>
-                        <Header>{aStore.name}</Header>
-                        <Button onClick={() => getFoods(aStore.id)}>
-                            <Image src={urls[aStore.id - 1]} style={{width:'40vh'}} />
+                        <Button onClick={() => getFoods(aStore.id)} color='black' fluid>
+                            <Image src={urls[aStore.id - 1]} style={{ width: '30vh', height: '20vh' }} centered />
+                            
+                            <List>
+                                <Header color='pink'>{aStore.name}</Header>
+                                <List.Item>營業時間:{aStore.start_time}~{aStore.end_time}</List.Item>
+                                <List.Item>電話號碼:{aStore.phone_number}</List.Item>
+                            </List>
                         </Button>
-                        {aStore.description}
-                        營業時間:{aStore.start_time}~{aStore.end_time}
-                        電話號碼:{aStore.phone_number}
                     </Grid.Column>
                 )
             })}
