@@ -3,16 +3,16 @@ import { List, Header, Segment, Table, Grid } from 'semantic-ui-react';
 
 
 
-export const Transaction = ({ transaction_status }) => {
+export const Transaction = ({ transaction_status, my_trans }) => {
 
     function getStatus(x) {
-        if (x.finished === 1) {
+        if (x.has_accepted === 1) {
             return '已完成交易'
         }
-        else if (x.paid === 1) {
+        else if (x.has_paid === 1) {
             return '已付款'
         }
-        else if (x.accepted === 1) {
+        else if (x.has_accepted === 1) {
             return '已接受訂單'
         }
         else {
@@ -20,20 +20,20 @@ export const Transaction = ({ transaction_status }) => {
         }
     }
 
-    function getPrice(x){
-        let total = 0
-        x.items.forEach(item => {
-            total = total + item.price * item.number
-        })
-        return total
-    }
+    // function getPrice(x){
+    //     let total = 0
+    //     x.items.forEach(item => {
+    //         total = total + item.price * item.number
+    //     })
+    //     return total
+    // }
 
     return (
 
         <Segment inverted style={{ padding: '10vh', paddingBottom: "50vh" }}>
             <Header>我的訂單</Header>
             <List inverted>
-                {transaction_status.map(x => {
+                {my_trans.map(x => {
                     return (
                         <List.Item key={"trans" + x.transaction_id} style={{marginBottom:'10vh'}}>
                             <Grid>
@@ -41,13 +41,15 @@ export const Transaction = ({ transaction_status }) => {
                                     <Header>
                                         編號: {x.transaction_id}<br/>
                                         狀態: {getStatus(x)}<br/>
-                                        金額: {getPrice(x)}
+                                        金額: {x.price}
                                     </Header>
                                 </Grid.Column>
                                 <Grid.Column width={8}>
                                     <Table inverted>
                                         <Table.Body>
-                                            {x.items.map(item => {
+                                            {x.items !== undefined?
+                                            x.items.map(item => {
+                                                console.log(item)
                                                 return (
                                                     // <div>{item.name}:{item.price}元 {item.number}份</div>
                                                     <Table.Row>
@@ -56,7 +58,8 @@ export const Transaction = ({ transaction_status }) => {
                                                         <Table.Cell><Header>{item.number} 份</Header></Table.Cell>
                                                     </Table.Row>
                                                 )
-                                            })}
+                                            })
+                                            :null}
                                         </Table.Body>
                                     </Table>
                                 </Grid.Column>
@@ -92,3 +95,21 @@ export const Transaction = ({ transaction_status }) => {
 //     "price": 60,
 //     "number": 2
 // }
+
+// @app.route('/get_transactions_student')
+// def get_transation_student():
+//     student_id = request.args.get('student_id', type=str)
+//     student_transactions = db.session.query(TransactionRecord).filter_by(student_id=student_id)
+//     return_dic = []
+//     for i in student_transactions:
+//         dic = {}
+//         dic['transaction_id']   = i.id
+//         dic['store_id']         = i.store_id
+//         dic['price']            = i.price
+//         dic['date_time']        = i.date_time.strftime('%Y-%m-%d, %H:%M:%S')
+//         dic['has_accepted']     = i.has_accepted
+//         dic['has_completed']    = i.has_completed
+//         dic['has_paid']         = i.has_paid
+//         return_dic.append(dic)
+    
+//     return Response(json.dumps(return_dic), mimetype='application/json')

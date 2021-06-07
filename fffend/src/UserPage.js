@@ -8,6 +8,7 @@ import { Orders } from "./userComponents/Orders";
 import { Transaction } from "./userComponents/Transaction"
 // import pick from 'lodash/pick';
 import { Link } from "react-router-dom";
+import {useInterval} from './useInterval'
 
 function UserPage() {
 
@@ -28,6 +29,8 @@ function UserPage() {
   const [showMenu, setShowMenu] = useState(true)
   const [showTrans, setShowTrans] = useState(true)
 
+  const [my_trans, setMy_trans] = useState([])
+
 
 
   useEffect(() => {
@@ -45,7 +48,8 @@ function UserPage() {
         //   console.log(storeImg)
 
       })
-
+      getTrans_by_student("1")
+      getTrans_by_student("1")
   }, [])
 
 
@@ -163,6 +167,26 @@ function UserPage() {
     }
   }
 
+  async function getTrans_by_student(student_id){
+    const res = await fetch('/get_transactions_student?student_id=' + student_id)
+    const data = await res.json()
+
+    // data.forEach(async(d) => {
+    //   const item_res = await fetch('/get_transaction_items?transaction_id=' + d.transaction_id)
+    //   const item_data = await item_res.json()
+    //   d.items = item_data
+    // })
+    data.forEach(async(d) => {
+      const item_res = await fetch('/get_transaction_items?transaction_id=' + d.transaction_id)
+      const item_data = await item_res.json()
+      d.items = item_data
+    })
+    setMy_trans(()=>{
+      return [...data]
+    })
+  }
+  
+
   return (
     <Container style={{ marginTop: 40 }}>
       {/* <Button attached='top' onClick={()=>show()}>顯示店家</Button> */}
@@ -193,7 +217,7 @@ function UserPage() {
         : null}
 
       {showTrans ?
-        <Transaction transaction_status={transaction_status}></Transaction>
+        <Transaction transaction_status={transaction_status} my_trans={my_trans}></Transaction>
         : null}
     </Container>
   );
