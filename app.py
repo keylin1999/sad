@@ -93,6 +93,24 @@ def get_transaction_status():
     # print(return_dic)
     return Response(json.dumps(return_dic), mimetype='application/json')
 
+@app.route('/get_transactions_student')
+def get_transation_student():
+    student_id = request.args.get('student_id', type=str)
+    student_transactions = db.session.query(TransactionRecord).filter_by(student_id=student_id)
+    return_dic = []
+    for i in student_transactions:
+        dic = {}
+        dic['transaction_id']   = i.id
+        dic['store_id']         = i.store_id
+        dic['price']            = i.price
+        dic['date_time']        = i.date_time.strftime('%Y-%m-%d, %H:%M:%S')
+        dic['has_accepted']     = i.has_accepted
+        dic['has_completed']    = i.has_completed
+        dic['has_paid']         = i.has_paid
+        return_dic.append(dic)
+    
+    return Response(json.dumps(return_dic), mimetype='application/json')
+
 @app.route('/get_transactions')
 def get_transactions():
     store_id = request.args.get('store_id', type=str)
