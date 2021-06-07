@@ -64,7 +64,7 @@ export const Foods = ({ foods, orders, setOrders }) => {
             <Table.Body>
                 {foods.length === 0 ?
                     <Table.Row>
-                        請點選店家
+                        <Table.Cell textAlign='center'>請點選店家</Table.Cell>
                     </Table.Row>
                     : null}
                 {

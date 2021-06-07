@@ -23,6 +23,9 @@ export const Orders = ({ orders, sendOrders, rmAllOrders }) => {
             </Header>
             
             <List inverted>
+                {orders.length === 0 ?
+                <Header inverted>尚無商品</Header>
+                    : null}
                 {orders.map(order => {
                     return (
                         <List.Item key={order.name}>
