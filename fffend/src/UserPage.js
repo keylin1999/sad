@@ -102,7 +102,7 @@ function UserPage() {
     }
   }
 
-  function rmAllOrders(){
+  function rmAllOrders() {
     setOrders([])
   }
 
@@ -138,27 +138,27 @@ function UserPage() {
     })
   }
 
-  function showStoreInfo(){
-    if(showStore===true){
+  function showStoreInfo() {
+    if (showStore === true) {
       setShowStore(false)
     }
-    else{
+    else {
       setShowStore(true)
     }
   }
-  function showMenuInfo(){
-    if(showMenu===true){
+  function showMenuInfo() {
+    if (showMenu === true) {
       setShowMenu(false)
     }
-    else{
+    else {
       setShowMenu(true)
     }
   }
-  function showTransInfo(){
-    if(showTrans===true){
+  function showTransInfo() {
+    if (showTrans === true) {
       setShowTrans(false)
     }
-    else{
+    else {
       setShowTrans(true)
     }
   }
@@ -168,33 +168,33 @@ function UserPage() {
       {/* <Button attached='top' onClick={()=>show()}>顯示店家</Button> */}
       <Grid columns={2}>
         <Button.Group>
-          <Button onClick={()=>showStoreInfo()}>顯示店家</Button>
-          <Button onClick={()=>showMenuInfo()}>顯示菜單</Button>
-          <Button onClick={()=>showTransInfo()}>顯示訂單</Button>
+          <Button onClick={() => showStoreInfo()}>顯示店家</Button>
+          <Button onClick={() => showMenuInfo()}>顯示菜單</Button>
+          <Button onClick={() => showTransInfo()}>顯示訂單</Button>
           <Button><Link to="/">返回首頁</Link></Button>
         </Button.Group>
-          
+
       </Grid>
 
 
-      {showStore ? 
-      <Stores stores={stores} getFoods={getFoods} storeImg={storeImg} ></Stores> 
-      : null}
+      {showStore ?
+        <Stores stores={stores} getFoods={getFoods} storeImg={storeImg} ></Stores>
+        : null}
 
       {showMenu ?
-      <Grid columns={2} stackable>
-        <Grid.Column width={8}>
-          <Foods foods={foods} orders={orders} setOrders={setOrders} ></Foods>
-        </Grid.Column>
-        <Grid.Column width={8}>
-          <Orders orders={orders} sendOrders={sendOrders} rmAllOrders={rmAllOrders}></Orders>
-        </Grid.Column>
-      </Grid>
-      : null}
+        <Grid columns={2} stackable>
+          <Grid.Column width={8}>
+            <Foods foods={foods} orders={orders} setOrders={setOrders} ></Foods>
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <Orders orders={orders} sendOrders={sendOrders} rmAllOrders={rmAllOrders}></Orders>
+          </Grid.Column>
+        </Grid>
+        : null}
 
       {showTrans ?
-      <Transaction transaction_status={transaction_status}></Transaction>
-      : null}
+        <Transaction transaction_status={transaction_status}></Transaction>
+        : null}
     </Container>
   );
 }

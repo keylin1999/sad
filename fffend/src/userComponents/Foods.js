@@ -8,7 +8,7 @@ export const Foods = ({ foods, orders, setOrders }) => {
     function addOrders(id, name, price) {
         if (orders.length === 0) {
             setOrders(function (prevOrders) {
-                return [...prevOrders, { id: id, name: name, qty: 1, price: price}]
+                return [...prevOrders, { id: id, name: name, qty: 1, price: price }]
             })
         }
         else {
@@ -62,6 +62,11 @@ export const Foods = ({ foods, orders, setOrders }) => {
             </Table.Header>
 
             <Table.Body>
+                {foods.length === 0 ?
+                    <Table.Row>
+                        請點選店家
+                    </Table.Row>
+                    : null}
                 {
                     foods.map(food => {
                         return (
@@ -72,7 +77,7 @@ export const Foods = ({ foods, orders, setOrders }) => {
                                     <Button basic color='orange' onClick={() => addOrders(food.id, food.name, food.price)}>+</Button>
                                     <Button basic color='orange' onClick={() => rmOrders(food.id, food.name)}>-</Button>
                                 </Table.Cell>
-                                
+
                             </Table.Row>
                         )
                     })
