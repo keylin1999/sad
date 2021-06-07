@@ -49,7 +49,6 @@ function UserPage() {
 
       })
       getTrans_by_student("1")
-      getTrans_by_student("1")
   }, [])
 
 
@@ -171,11 +170,6 @@ function UserPage() {
     const res = await fetch('/get_transactions_student?student_id=' + student_id)
     const data = await res.json()
 
-    // data.forEach(async(d) => {
-    //   const item_res = await fetch('/get_transaction_items?transaction_id=' + d.transaction_id)
-    //   const item_data = await item_res.json()
-    //   d.items = item_data
-    // })
     data.forEach(async(d) => {
       const item_res = await fetch('/get_transaction_items?transaction_id=' + d.transaction_id)
       const item_data = await item_res.json()
@@ -211,7 +205,7 @@ function UserPage() {
             <Foods foods={foods} orders={orders} setOrders={setOrders} ></Foods>
           </Grid.Column>
           <Grid.Column width={8}>
-            <Orders orders={orders} sendOrders={sendOrders} rmAllOrders={rmAllOrders}></Orders>
+            <Orders orders={orders} sendOrders={sendOrders} rmAllOrders={rmAllOrders} getTrans_by_student={getTrans_by_student}></Orders>
           </Grid.Column>
         </Grid>
         : null}

@@ -3,7 +3,7 @@ import { List, Header, Button, Segment, Table } from 'semantic-ui-react';
 
 
 
-export const Orders = ({ orders, sendOrders, rmAllOrders }) => {
+export const Orders = ({ orders, sendOrders, rmAllOrders, getTrans_by_student }) => {
 
     function getPrice(){
         let total = 0
@@ -39,7 +39,7 @@ export const Orders = ({ orders, sendOrders, rmAllOrders }) => {
                 })}
                 
                 <Header textAlign='right' inverted>金額: {getPrice()}</Header>
-                <Button attached='bottom' inverted onClick={() => sendOrders()}>送出</Button>
+                <Button attached='bottom' inverted onClick={() => {sendOrders(); getTrans_by_student("1")}}>送出</Button>
             </List>
         </Segment>
 
